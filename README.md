@@ -1,5 +1,10 @@
 # dio-desafio-workout-api
+# Instalações basicas
+poetry add fastapi uvicorn aqlalchemy
+# O pydantic é instalado quando se instala o fastapi
+
 # Estrutura
+```
 .
 ├── app/
 │   ├── api/
@@ -46,3 +51,4 @@
 ├── .env                          # Variáveis de ambiente
 ├── requirements.txt              # Dependências do Python
 └── Dockerfile                    # Containerização
+```
