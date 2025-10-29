@@ -16,7 +16,7 @@ http://127.0.0.1:8000/docs
 ```
 # dio-desafio-workout-api/Makefile
 run:
-    uvicorn src.main:app --reload
+    poetry run uvicorn src.main:app --reload
 ```
 # Para executar o Makefile:
 ```
