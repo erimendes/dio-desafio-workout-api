@@ -1,7 +1,7 @@
 from sqlalchemy import Integer, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from models.atleta import AtletaModel
-from models.models import BaseModel
+from .atleta import AtletaModel
+from .models import BaseModel
 
 
 class CategoriaModel(BaseModel):
