@@ -54,8 +54,75 @@ make create-migrations d="init_db"
 
 Após gerar o arquivo de migração, aplique-o no banco de dados.
 
-# Comando: Aplica todas as migrações pendentes no banco
+# Comando: Aplica todas as migrações pendentes no banco(Cria as tabelas)
+Gerenciamento e Verificação do Banco de Dados PostgreSQL
+
+Este guia contém os comandos essenciais para aplicar migrações e verificar o estado das tabelas diretamente no container.
+
+1. Aplicar Migrações (Criar as Tabelas)
+
+Use o comando do Makefile para aplicar todas as migrações pendentes no banco de dados (workout), criando as tabelas definidas nos seus modelos.
+
+# Comando: Aplica todas as migrações pendentes no banco (Cria as tabelas)
 make run-migrations
+
+
+2. Confirmar as Tabelas no Container
+
+Após aplicar a migração, você pode entrar no container do PostgreSQL para confirmar se as tabelas (atletas, categorias, etc.) foram criadas.
+
+Opção A: Acesso Direto (Recomendado)
+
+Use o comando docker exec para se conectar diretamente ao cliente psql dentro do container.
+
+# O nome do container é 'workout_db' (definido no docker-compose.yml)
+# -U: Usuário | -d: Banco de Dados
+docker exec -it workout_db psql -U workout -d workout
+
+
+Atenção: Você será solicitado a fornecer a senha (POSTGRES_PASSWORD do seu arquivo .env).
+
+Após logar, use o meta-comando para listar as tabelas:
+
+\dt
+
+
+Opção B: Acesso em Duas Etapas
+
+Entra primeiro no shell do container e depois no cliente psql.
+
+# 1. Entrar no shell do container
+docker exec -it workout_db bash
+
+# 2. Conectar ao psql a partir do shell
+psql -U workout -d workout
+
+# 3. Listar as tabelas
+\dt 
+
+
+3. Consultar as Tabelas pelo pgAdmin
+
+Se estiver usando a interface do pgAdmin, você pode usar a Query Tool:
+
+-- Query SQL para listar todas as tabelas no esquema público
+SELECT table_schema, table_name
+FROM information_schema.tables
+WHERE table_schema = 'public'
+AND table_type = 'BASE TABLE';
+
+
+Ou, para ver os dados de uma tabela específica (exemplo):
+
+SELECT * FROM atletas;
+
+```
+SELECT table_schema, table_name
+FROM information_schema.tables
+WHERE table_schema = 'public';
+```
+
+
 
 # Estrutura
 ```
