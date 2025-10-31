@@ -122,6 +122,7 @@ FROM information_schema.tables
 WHERE table_schema = 'public';
 ```
 
+# Instalar o DBeaver para gerenciar o banco de dados
 
 
 # Estrutura

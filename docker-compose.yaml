@@ -28,7 +28,7 @@ services:
   # 3. Gerenciador de Banco de Dados (pgAdmin)
   # ----------------------------------------------------
   pgadmin:
-    image: dpage/pgadmin4
+    image: dpage/pgadmin4:latest
     container_name: pgadmin_workout
     restart: always
     env_file:
@@ -43,13 +43,13 @@ services:
       db:
         condition: service_healthy
     # Configuração inicial para adicionar o servidor DB
-    # volumes:
-    #   - pgadmin_data:/var/lib/pgadmin
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
     
 # # Definição dos volumes persistentes
-# volumes:
+volumes:
 #   postgres_data:
-#   pgadmin_data:
+  pgadmin_data:
 
 
 
