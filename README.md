@@ -122,6 +122,9 @@ FROM information_schema.tables
 WHERE table_schema = 'public';
 ```
 
+# Instalar pydantic-settings
+poetry add pydantic-settings
+
 # Instalar o DBeaver para gerenciar o banco de dados
 
 
