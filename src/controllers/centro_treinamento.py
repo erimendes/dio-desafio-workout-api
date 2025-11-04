@@ -25,6 +25,10 @@ async def post_centro_treinamento(
     try:
         # Simplificação: Usar model_dump para passar todos os campos do Pydantic para o modelo SQLAlchemy.
         # Remove a geração manual de UUID, confiando no Pydantic ou no modelo.
+        centro_treinamento_out = CentroTreinamentoOut(
+            id=uuid4(), 
+            **centro_treinamento_in.model_dump()
+        )
         centro_treinamento_model = CentroTreinamentoModel(
             **centro_treinamento_in.model_dump() 
         )
@@ -51,10 +55,10 @@ async def post_centro_treinamento(
     response_model=list[CentroTreinamentoOut],
 )
 async def query_all(db_session: DatabaseDependency) -> list[CentroTreinamentoOut]: # Função renomeada
-    centros_treinamento = (await db_session.execute(select(CentroTreinamentoModel))).scalars().all()
+    centros_treinamento_out: list[CentroTreinamentoOut] = (await db_session.execute(select(CentroTreinamentoModel))).scalars().all()
     
     # Converte a lista de modelos SQLAlchemy para lista de schemas Pydantic
-    return [CentroTreinamentoOut.model_validate(ct, from_attributes=True) for ct in centros_treinamento]
+    return [CentroTreinamentoOut.model_validate(ct, from_attributes=True) for ct in centros_treinamento_out]
 
 
 @router.get(
