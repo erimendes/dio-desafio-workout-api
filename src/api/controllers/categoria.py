@@ -4,7 +4,7 @@ from fastapi import APIRouter, Body, status
 from pydantic import UUID4
 from src.models.categorias import CategoriaModel
 from src.schemas.categorias import CategoriaIn, CategoriaOut
-from src.dependencies import DatabaseDependency
+from src.api.dependencies import DatabaseDependency
 from sqlalchemy.future import select
 
 router = APIRouter()

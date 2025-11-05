@@ -20,7 +20,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 
 # 1. Importa a Base (do models.py)
-from src.models.models import BaseModel 
+from models.base import BaseModel 
 
 # 2. Importa TODOS os arquivos de modelo para popular o target_metadata
 #    (Mesmo que eles não sejam usados diretamente aqui, eles precisam ser carregados)

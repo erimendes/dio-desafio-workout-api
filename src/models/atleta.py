@@ -2,7 +2,7 @@
 from datetime import datetime, timezone
 from sqlalchemy import ForeignKey, Integer, String, Float, DateTime
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from .models import BaseModel  # Certifique-se que BaseModel é a Base declarativa
+from .base import BaseModel  # Certifique-se que BaseModel é a Base declarativa
 
 class AtletaModel(BaseModel):
     __tablename__ = "atletas"

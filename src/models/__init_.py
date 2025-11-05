@@ -1,4 +1,4 @@
-from .models import BaseModel
+from .base import BaseModel
 from .atleta import AtletaModel
 from .categorias import CategoriaModel
 from .centro_treinamento import CentroTreinamentoModel

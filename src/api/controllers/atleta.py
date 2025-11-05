@@ -12,7 +12,7 @@ from src.models.atleta import AtletaModel
 from src.models.categorias import CategoriaModel
 from src.models.centro_treinamento import CentroTreinamentoModel
 from src.schemas.atleta import AtletaIn, AtletaOut, AtletaUpdate
-from src.dependencies import DatabaseDependency
+from src.api.dependencies import DatabaseDependency
 
 router = APIRouter()
 

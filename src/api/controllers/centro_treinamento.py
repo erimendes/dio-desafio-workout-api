@@ -3,7 +3,7 @@ from fastapi import APIRouter, Body, status, HTTPException # Adicionado HTTPExce
 from pydantic import UUID4
 from src.models.centro_treinamento import CentroTreinamentoModel
 from src.schemas.centros_treinamento import CentroTreinamentoIn, CentroTreinamentoOut
-from src.dependencies import DatabaseDependency
+from src.api.dependencies import DatabaseDependency
 from sqlalchemy.future import select
 from sqlalchemy.exc import IntegrityError # Importado IntegrityError
 

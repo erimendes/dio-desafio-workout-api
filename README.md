@@ -8,6 +8,25 @@ Pré-requisitos
 
 Certifique-se de ter o Python (3.12+) e o Poetry instalados.
 
+🐍 Instalar Python 3 no Ubuntu / Debian
+🧩 1. Atualize o sistema
+sudo apt update && sudo apt upgrade -y
+
+🏗️ 2. Instale o Python e o pip
+https://wiki.python.org/moin/BeginnersGuide/Download
+sudo apt install python3 python3-pip python3-dev -y
+
+📦 2️⃣ Instalar o pipx
+pipx serve para instalar ferramentas Python isoladas (como o Poetry, Flask CLI, etc.)
+sudo apt install pipx -y
+
+🎶 3️⃣ Instalar o Poetry com pipx
+
+Agora que o pipx está pronto, instale o Poetry:
+
+pipx install poetry
+poetry --version
+
 1. Inicialização do Projeto
 
 Inicialize o ambiente e instale todas as dependências do projeto:
@@ -131,54 +150,104 @@ poetry add pydantic-settings
 # Estrutura
 ```
 .
-├── dio-desafio-workout-api/
-│   ├──src/
-│   │   ├── api/
-│   │   │   ├── v1/
-│   │   │   │   ├── endpoints/  # Rotas e funções de API (APIRouter)
-│   │   │   │   │   ├── user.py
-│   │   │   │   │   ├── item.py
-│   │   │   │   │   └── __init__.py
-│   │   │   │   └── __init__.py
-│   │   │   └── __init__.py
-│   │   │
-│   │   ├── core/
-│   │   │   ├── config.py             # Configurações globais (Settings com Pydantic)
-│   │   │   ├── dependencies.py       # Dependências reutilizáveis (Auth, Sessão DB)
-│   │   │   └── __init__.py
-│   │   │
-│   │   ├── db/
-│   │   │   ├── base.py               # Configurações de conexão DB (Engine/Session)
-│   │   │   ├── crud.py               # Operações de CRUD de baixo nível
-│   │   │   └── __init__.py
-│   │   │
-│   │   ├── controllers/
-│   │   │
-│   │   ├── models/
-│   │   │   ├── user.py               # Modelos ORM (SQLModel/SQLAlchemy)
-│   │   │   ├── item.py
-│   │   │   └── __init__.py
-│   │   │
-│   │   ├── schemas/
-│   │   │   ├── user.py               # Modelos de validação de dados (Pydantic)
-│   │   │   ├── item.py               # (Entrada/Saída de dados da API)
-│   │   │   └── __init__.py
-│   │   │
-│   │   ├── services/
-│   │   │   ├── user.py               # Lógica de Negócios (Business Logic)
-│   │   │   ├── item.py               # (Isola a rota da complexidade)
-│   │   │   └── __init__.py
-│   │   │
-│   │   ├── views/
-│   │   │
-│   │   └── main.py                   # Ponto de entrada da aplicação FastAPI
-│   │
-├── tests/                        # Arquivos de Teste
-│   ├── conftest.py
-│   ├── test_user.py
-│   └── test_item.py
+dio-desafio-workout-api/
 │
-├── .env                          # Variáveis de ambiente
-├── requirements.txt              # Dependências do Python
-└── Dockerfile                    # Containerização
+├── src/
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── main.py    # ponto de entrada FastAPI
+│   │
+│   ├── api/
+│   │   ├── __init__.py
+│   │   ├── dependencies.py
+│   │   ├── routers/
+│   │   │   ├── __init__.py
+│   │   │   ├── atletas.py
+│   │   │   ├── categorias.py
+│   │   │   └── centros_treinamento.py
+│   │   └── controllers/    # lógica de negócio separada
+│   │       ├── __init__.py
+│   │       ├── atleta_controller.py
+│   │       ├── categoria_controller.py
+│   │       └── centro_treinamento_controller.py
+│   │
+│   ├── configs/
+│   │   ├── __init__.py
+│   │   └── settings.py
+│   │
+│   ├── core/
+│   │   ├── __init__.py
+│   │   └── database.py (opcional)
+│   │
+│   ├── models/
+│   │   ├── __init__.py
+│   │   ├── atleta.py
+│   │   ├── categoria.py
+│   │   ├── centro_treinamento.py
+│   │   └── base.py
+│   │
+│   └── schemas/
+│       ├── __init__.py
+│       ├── atleta.py
+│       ├── categoria.py
+│       ├── centro_treinamento.py
+│       └── schemas.py
+│
+├── .env
+├── .gitignore
+├── alembic.ini
+├── docker-compose.yaml
+├── Makefile
+├── pyproject.toml
+├── poetry.lock
+└── README.md
+
+dio-desafio-workout-api/
+│
+├── src/
+│   ├── app/
+│   │   ├── main.py
+│   │   └── factory.py
+│   │
+│   ├── api/
+│   │   ├── routers/
+│   │   │   ├── atletas.py
+│   │   │   ├── categorias.py
+│   │   │   └── centros_treinamento.py
+│   │   └── controllers/
+│   │       ├── atleta_controller.py
+│   │       ├── categoria_controller.py
+│   │       └── centro_treinamento_controller.py
+│   │
+│   ├── configs/
+│   │   └── settings.py
+│   │
+│   ├── core/
+│   │   └── database.py
+│   │
+│   ├── models/
+│   │   ├── base.py
+│   │   ├── atleta.py
+│   │   ├── categoria.py
+│   │   └── centro_treinamento.py
+│   │
+│   ├── repositories/
+│   │   ├── atleta_repository.py
+│   │   ├── categoria_repository.py
+│   │   └── centro_treinamento_repository.py
+│   │
+│   ├── schemas/
+│   │   ├── atleta.py
+│   │   ├── categoria.py
+│   │   └── centro_treinamento.py
+│   │
+│   └── services/
+│       ├── atleta_service.py
+│       ├── categoria_service.py
+│       └── centro_treinamento_service.py
+│
+├── .env
+├── pyproject.toml
+└── README.md
+
 ```

@@ -5,7 +5,7 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 # Não é estritamente necessário importar AtletaModel aqui se for usado apenas como string
 # from .atleta import AtletaModel 
-from .models import BaseModel
+from .base import BaseModel
 
 class CentroTreinamentoModel(BaseModel):
     __tablename__ = 'centros_treinamento'
