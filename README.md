@@ -127,7 +127,7 @@ ou
 ```
 docker exec -it workout_db bash
 psql -U workout -d workout
-`` 
+```
 
 Listar as tabelas disponíveis
 \dt
