@@ -53,68 +53,61 @@ poetry --version
 ```
 
 
-## Inicialização do Projeto
 
-Inicialize o ambiente e instale todas as dependências do projeto:
 
-### Inicializa o projeto (se ainda não tiver um pyproject.toml)
-poetry init 
+🚀 Inicialização do Projeto
 
-### Instala todas as dependências de produção
-Nota: O pydantic é instalado automaticamente como dependência do FastAPI.
-```
-poetry add fastapi uvicorn 'sqlalchemy[asyncio]' asyncpg alembic pydantic-settings
-```
+Inicialize o ambiente e instale todas as dependências necessárias para o projeto.
 
-## Configuração do Banco de Dados (PostgreSQL)
+⚙️ 1. Inicializar o projeto
 
-É necessário ter um servidor PostgreSQL rodando e acessível na porta 5432. Recomenda-se o uso de Docker para isolamento do ambiente.
+Se ainda não existir um arquivo pyproject.toml, inicialize o projeto com:
 
-Crie um container Docker para o PostgreSQL (Seu docker-compose.yml deve conter o serviço db):
+poetry init
 
-## Comando Docker para iniciar contaienr do banco de dados
-```
-docker compose up -d db 
-```
+📦 2. Instalar dependências de produção
 
-⚙️ Migrações e Banco de Dados (Alembic)
+💡 Nota: O pydantic é instalado automaticamente como dependência do FastAPI.
 
-O Alembic é utilizado para gerenciar o esquema do banco de dados (criação e alteração de tabelas).
+Instale as dependências principais do projeto:
 
-1. Inicialização do Alembic
+poetry add fastapi uvicorn "sqlalchemy[asyncio]" asyncpg alembic pydantic-settings
 
-Se você ainda não tiver a pasta alembic/, execute:
-```
+🗄️ Configuração do Banco de Dados (PostgreSQL)
+
+É necessário ter um servidor PostgreSQL rodando e acessível na porta 5432.
+Recomenda-se o uso de Docker para isolamento e facilidade de configuração.
+
+Subir o container do banco de dados
+
+Certifique-se de que seu docker-compose.yml contém um serviço chamado db.
+Para iniciar o container, execute:
+
+docker compose up -d db
+
+🧩 Migrações e Banco de Dados (Alembic)
+
+O Alembic é utilizado para gerenciar a estrutura do banco de dados — criação, atualização e versionamento das tabelas.
+
+🏗️ Inicialização do Alembic
+
+Se ainda não existir a pasta alembic/, inicialize com:
+
 poetry run alembic init alembic
-```
 
-2. Geração da Migração Inicial
+🪄 Geração da Migração Inicial
 
-O comando para gerar migrações está encapsulado no Makefile. Este processo compara seus modelos Python com o banco de dados e cria o script de migração.
+O comando para gerar as migrações está encapsulado no Makefile.
+Ele compara seus modelos Python com o banco de dados e cria o script de migração correspondente.
 
-# Comando: Gera a migração com a mensagem "init_db"
-# (Assume que seu Makefile está corrigido e usando poetry run)
-```
-make create-migrations d="init_db" 
-```
+Gerar a migração inicial com a mensagem "init_db"
+make create-migrations d="init_db"
 
-3. Aplicação da Migração
+🚚 Aplicar as migrações ao banco
 
-Após gerar o arquivo de migração, aplique-o no banco de dados.
+Cria as tabelas e aplica todas as migrações pendentes:
 
-# Comando: Aplica todas as migrações pendentes no banco(Cria as tabelas)
-Gerenciamento e Verificação do Banco de Dados PostgreSQL
-
-Este guia contém os comandos essenciais para aplicar migrações e verificar o estado das tabelas diretamente no container.
-
-1. Aplicar Migrações (Criar as Tabelas)
-
-Use o comando do Makefile para aplicar todas as migrações pendentes no banco de dados (workout), criando as tabelas definidas nos seus modelos.
-
-# Comando: Aplica todas as migrações pendentes no banco (Cria as tabelas)
-```
 make run-migrations
-```
 
 
 
@@ -167,6 +160,7 @@ Banco: workout
 
 
 # Estrutura
+
 ```
 dio-desafio-workout-api/
 │
