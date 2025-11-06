@@ -62,9 +62,9 @@ Inicialize o ambiente e instale todas as dependências necessárias para o proje
 ⚙️ 1. Inicializar o projeto
 
 Se ainda não existir um arquivo pyproject.toml, inicialize o projeto com:
-
+```
 poetry init
-
+```
 📦 2. Instalar dependências de produção
 
 💡 Nota: O pydantic é instalado automaticamente como dependência do FastAPI.
@@ -82,9 +82,9 @@ Subir o container do banco de dados
 
 Certifique-se de que seu docker-compose.yml contém um serviço chamado db.
 Para iniciar o container, execute:
-
+```
 docker compose up -d db
-
+```
 🧩 Migrações e Banco de Dados (Alembic)
 
 O Alembic é utilizado para gerenciar a estrutura do banco de dados — criação, atualização e versionamento das tabelas.
@@ -92,26 +92,25 @@ O Alembic é utilizado para gerenciar a estrutura do banco de dados — criaçã
 🏗️ Inicialização do Alembic
 
 Se ainda não existir a pasta alembic/, inicialize com:
-
+```
 poetry run alembic init alembic
-
+```
 🪄 Geração da Migração Inicial
 
 O comando para gerar as migrações está encapsulado no Makefile.
 Ele compara seus modelos Python com o banco de dados e cria o script de migração correspondente.
 
-Gerar a migração inicial com a mensagem "init_db"
+Gerar a migração inicial com a mensagem "init_db":
+```
 make create-migrations d="init_db"
+```
 
 🚚 Aplicar as migrações ao banco
 
 Cria as tabelas e aplica todas as migrações pendentes:
-
+```
 make run-migrations
-
-
-
-
+```
 
 🗃️ Como acessar o banco de dados (3 maneiras)
 
@@ -139,9 +138,9 @@ Se estiver utilizando a interface do pgAdmin, você pode usar a Query Tool para 
 Listar todas as tabelas no esquema público:
 ```
 SELECT table_schema, table_name
-FROM information_schema.tables
-WHERE table_schema = 'public'
-  AND table_type = 'BASE TABLE';
+  FROM information_schema.tables
+ WHERE table_schema = 'public'
+   AND table_type = 'BASE TABLE';
 ```
 Ver os dados de uma tabela específica (exemplo):
 ```
