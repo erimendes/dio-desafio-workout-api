@@ -52,9 +52,6 @@ pipx install poetry
 poetry --version
 ```
 
-
-
-
 🚀 Inicialização do Projeto
 
 Inicialize o ambiente e instale todas as dependências necessárias para o projeto.
@@ -70,9 +67,9 @@ poetry init
 💡 Nota: O pydantic é instalado automaticamente como dependência do FastAPI.
 
 Instale as dependências principais do projeto:
-
+```
 poetry add fastapi uvicorn "sqlalchemy[asyncio]" asyncpg alembic pydantic-settings
-
+```
 🗄️ Configuração do Banco de Dados (PostgreSQL)
 
 É necessário ter um servidor PostgreSQL rodando e acessível na porta 5432.
