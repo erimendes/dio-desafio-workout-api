@@ -136,15 +136,17 @@ Listar as tabelas disponíveis
 
 Se estiver utilizando a interface do pgAdmin, você pode usar a Query Tool para executar comandos SQL.
 
-Listar todas as tabelas no esquema público
+Listar todas as tabelas no esquema público:
+```
 SELECT table_schema, table_name
 FROM information_schema.tables
 WHERE table_schema = 'public'
   AND table_type = 'BASE TABLE';
-
-Ver os dados de uma tabela específica (exemplo)
+```
+Ver os dados de uma tabela específica (exemplo):
+```
 SELECT * FROM atletas;
-
+```
 🖥️ 3. Pelo DBeaver
 
 O DBeaver é uma ferramenta gráfica multiplataforma para gerenciamento de bancos de dados.
