@@ -40,39 +40,39 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install python3 python3-pip python3-dev -y
 ```
 
-📦 2️⃣ Instalar o pipx
+📦 3 Instalar o pipx
 pipx serve para instalar ferramentas Python isoladas (como o Poetry, Flask CLI, etc.)
 ```
 sudo apt install pipx -y
 ```
 
-🎶 3️⃣ Instalar o Poetry com pipx
+🎶 4 Instalar o Poetry com pipx
 ```
 pipx install poetry
 poetry --version
 ```
 
 
-1. Inicialização do Projeto
+## Inicialização do Projeto
 
 Inicialize o ambiente e instale todas as dependências do projeto:
 
-# Inicializa o projeto (se ainda não tiver um pyproject.toml)
+### Inicializa o projeto (se ainda não tiver um pyproject.toml)
 poetry init 
 
-# Instala todas as dependências de produção
-# Nota: O pydantic é instalado automaticamente como dependência do FastAPI.
+### Instala todas as dependências de produção
+Nota: O pydantic é instalado automaticamente como dependência do FastAPI.
 ```
-poetry add fastapi uvicorn 'sqlalchemy[asyncio]' asyncpg alembic
+poetry add fastapi uvicorn 'sqlalchemy[asyncio]' asyncpg alembic pydantic-settings
 ```
 
-2. Configuração do Banco de Dados (PostgreSQL)
+## Configuração do Banco de Dados (PostgreSQL)
 
 É necessário ter um servidor PostgreSQL rodando e acessível na porta 5432. Recomenda-se o uso de Docker para isolamento do ambiente.
 
 Crie um container Docker para o PostgreSQL (Seu docker-compose.yml deve conter o serviço db):
 
-# Exemplo de comando Docker para iniciar apenas o serviço de banco de dados
+## Comando Docker para iniciar contaienr do banco de dados
 ```
 docker compose up -d db 
 ```
@@ -137,51 +137,46 @@ Após logar, use o meta-comando para listar as tabelas:
 \dt
 ```
 
-Opção B: Acesso em Duas Etapas
+🗃️ Como acessar o banco de dados (3 maneiras)
 
-Entra primeiro no shell do container e depois no cliente psql.
+Você pode acessar o banco de dados do projeto de três formas diferentes:
+via shell do container, pgAdmin ou DBeaver.
 
-# 1. Entrar no shell do container
-```
+🐚 1. Pelo shell do container
+Entrar no shell do container
 docker exec -it workout_db bash
-```
 
-# 2. Conectar ao psql a partir do shell
-```
+Conectar ao psql a partir do shell
 psql -U workout -d workout
-```
 
-# 3. Listar as tabelas
-``` \dt ```
+Listar as tabelas disponíveis
+\dt
 
+🧭 2. Pelo pgAdmin
 
-3. Consultar as Tabelas pelo pgAdmin
+Se estiver utilizando a interface do pgAdmin, você pode usar a Query Tool para executar comandos SQL.
 
-Se estiver usando a interface do pgAdmin, você pode usar a Query Tool:
-
--- Query SQL para listar todas as tabelas no esquema público
-```
+Listar todas as tabelas no esquema público
 SELECT table_schema, table_name
 FROM information_schema.tables
 WHERE table_schema = 'public'
-AND table_type = 'BASE TABLE';
-```
+  AND table_type = 'BASE TABLE';
 
-Ou, para ver os dados de uma tabela específica (exemplo):
-```
+Ver os dados de uma tabela específica (exemplo)
 SELECT * FROM atletas;
-```
 
-```
-SELECT table_schema, table_name
-FROM information_schema.tables
-WHERE table_schema = 'public';
-```
+🖥️ 3. Pelo DBeaver
 
-# Instalar pydantic-settings
-poetry add pydantic-settings
+O DBeaver é uma ferramenta gráfica multiplataforma para gerenciamento de bancos de dados.
+Basta configurar uma nova conexão PostgreSQL com as mesmas credenciais do container:
 
-# Instalar o DBeaver para gerenciar o banco de dados
+Host: localhost
+
+Porta: 5432
+
+Usuário: workout
+
+Banco: workout
 
 
 # Estrutura
