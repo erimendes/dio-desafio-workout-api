@@ -59,3 +59,54 @@ async def query(id: UUID4, db_session: DatabaseDependency) -> CategoriaOut:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'Categoria não encontrada no id: {id}')
 
     return categoria
+
+@router.patch(
+    '/{id}',
+    summary='Editar uma categoria pelo id',
+    status_code=status.HTTP_200_OK,
+    response_model=CategoriaOut,
+)
+async def patch_categoria(
+    id: UUID4, 
+    db_session: DatabaseDependency, 
+    categoria_in: CategoriaIn = Body(...)
+) -> CategoriaOut:
+    # 1. Buscar a categoria
+    categoria: CategoriaModel = (await db_session.execute(select(CategoriaModel).filter_by(id=id))).scalars().first()
+    
+    if not categoria:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'Categoria não encontrada no id: {id}')
+
+    # 2. Aplicar a atualização parcial
+    # O método 'patch' garante que apenas os campos fornecidos em categoria_in sejam atualizados.
+    # Neste caso, como CategoriaIn só tem 'nome', apenas o nome será atualizado.
+    update_data = categoria_in.model_dump(exclude_unset=True)
+    
+    for key, value in update_data.items():
+        setattr(categoria, key, value)
+
+    # 3. Salvar e atualizar
+    await db_session.commit()
+    await db_session.refresh(categoria)
+
+    return categoria
+
+@router.delete(
+    '/{id}',
+    summary='Deletar uma categoria pelo id',
+    status_code=status.HTTP_204_NO_CONTENT,
+)
+async def delete_categoria(id: UUID4, db_session: DatabaseDependency) -> None:
+    # 1. Buscar a categoria
+    categoria: CategoriaModel = (await db_session.execute(select(CategoriaModel).filter_by(id=id))).scalars().first()
+    
+    if not categoria:
+        # Retornamos 404 se não for encontrada, mesmo no DELETE
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f'Categoria não encontrada no id: {id}')
+
+    # 2. Remover do banco
+    await db_session.delete(categoria)
+    await db_session.commit()
+    
+    # 3. Retornar 204 No Content (padrão para DELETE bem-sucedido)
+    # Não há retorno de objeto.

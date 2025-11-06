@@ -3,8 +3,6 @@ from sqlalchemy import Integer, String, DateTime
 from sqlalchemy.sql import func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
-# Não é estritamente necessário importar AtletaModel aqui se for usado apenas como string
-# from .atleta import AtletaModel 
 from .base import BaseModel
 
 class CentroTreinamentoModel(BaseModel):
@@ -15,9 +13,8 @@ class CentroTreinamentoModel(BaseModel):
     endereco: Mapped[str] = mapped_column(String(60), nullable=False)
     proprietario: Mapped[str] = mapped_column(String(30), nullable=False)
     
-    # create_at: Mapped[datetime] = mapped_column(DateTime, default=func.now(), nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime, default=func.now(), nullable=False)
     atletas: Mapped[list['AtletaModel']] = relationship(
-        "AtletaModel", # É recomendado usar a string, mesmo com a importação
+        "AtletaModel", 
         back_populates='centro_treinamento'
     )

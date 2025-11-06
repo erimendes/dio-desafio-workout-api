@@ -59,8 +59,7 @@ async def post_atleta(db_session: DatabaseDependency, atleta_in: AtletaIn = Body
     )
 
     # 2. Criação do modelo Atleta
-    # [MELHORIA]: Remoção do 'try/except ValidationError' desnecessário, 
-    # pois a validação de input é feita pelo FastAPI/Pydantic antes.
+    # A validação de input é feita pelo FastAPI/Pydantic.
     atleta_data = atleta_in.model_dump(exclude={"categoria", "centro_treinamento"})
     atleta_model = AtletaModel(
         **atleta_data,
@@ -78,7 +77,7 @@ async def post_atleta(db_session: DatabaseDependency, atleta_in: AtletaIn = Body
         await db_session.refresh(atleta_model)
     
     except IntegrityError:
-        # [MELHORIA]: Uso de 409 CONFLICT, mais semântico que 303 SEE_OTHER para chaves duplicadas.
+        # Uso de 409 CONFLICT, mais semântico que 303 SEE_OTHER para chaves duplicadas.
         await db_session.rollback()
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
@@ -102,7 +101,6 @@ async def post_atleta(db_session: DatabaseDependency, atleta_in: AtletaIn = Body
 )
 async def query_all(db_session: DatabaseDependency) -> list[AtletaOut]:
     """Consulta e retorna a lista de todos os atletas."""
-    # [SUGESTÃO]: Renomear a função para 'query_all' para evitar conflito com 'query_one'
     atletas: list[AtletaModel] = (await db_session.execute(select(AtletaModel))).scalars().all()
     # Converte os modelos ORM (AtletaModel) para o schema de saída (AtletaOut)
     return [AtletaOut.model_validate(atleta) for atleta in atletas]
@@ -114,14 +112,13 @@ async def query_all(db_session: DatabaseDependency) -> list[AtletaOut]:
     status_code=status.HTTP_200_OK,
     response_model=AtletaOut,
 )
-# [SUGESTÃO]: Renomear a função para 'query_one' para maior clareza
 async def query_one(id: UUID4, db_session: DatabaseDependency) -> AtletaOut:
     """Consulta e retorna um atleta específico pelo seu ID (UUID)."""
     
     atleta: AtletaModel = (await db_session.execute(select(AtletaModel).filter_by(id=id))).scalars().first()
     
     if not atleta:
-        # CORREÇÃO: Usando Atleta/404 NOT FOUND com detalhe correto
+        # Usando Atleta/404 NOT FOUND com detalhe correto
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, 
             detail=f'Atleta não encontrado no id: {id}'
@@ -150,7 +147,7 @@ async def patch(id: UUID4, db_session: DatabaseDependency, atleta_up: AtletaUpda
             detail=f'Atleta não encontrado no id: {id}'
         )
 
-    # CORREÇÃO CRÍTICA: Uso de 'exclude_unset=True' para garantir que apenas os 
+    # Uso de 'exclude_unset=True' para garantir que apenas os 
     # campos passados na requisição sejam atualizados, ignorando os não definidos.
     atleta_update = atleta_up.model_dump(exclude_unset=True)
     
@@ -159,7 +156,7 @@ async def patch(id: UUID4, db_session: DatabaseDependency, atleta_up: AtletaUpda
         setattr(atleta, key, value)
 
     await db_session.commit()
-    # CORREÇÃO CRÍTICA: Deve-se passar o objeto 'atleta' para o refresh
+    # Deve-se passar o objeto 'atleta' para o refresh
     await db_session.refresh(atleta) 
     
     return atleta # Retorna o objeto atualizado
@@ -172,7 +169,7 @@ async def patch(id: UUID4, db_session: DatabaseDependency, atleta_up: AtletaUpda
     status_code=status.HTTP_200_OK, 
     response_model=AtletaOut
 )
-# [SUGESTÃO]: Tipagem de retorno é AtletaOut (o que será retornado)
+# Tipagem de retorno é AtletaOut (o que será retornado)
 async def delete_atleta(id: UUID4, db_session: DatabaseDependency) -> AtletaOut:
     """Deleta um atleta pelo ID e retorna o objeto excluído."""
     

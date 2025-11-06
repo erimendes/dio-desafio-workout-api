@@ -43,13 +43,13 @@ services:
       db:
         condition: service_healthy
     # Configuração inicial para adicionar o servidor DB
-    volumes:
-      - pgadmin_data:/var/lib/pgadmin
+    # volumes:
+    #   - pgadmin_data:/var/lib/pgadmin
     
 # # Definição dos volumes persistentes
-volumes:
+# volumes:
 #   postgres_data:
-  pgadmin_data:
+  # pgadmin_data:
 
 
 
