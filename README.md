@@ -116,26 +116,9 @@ Use o comando do Makefile para aplicar todas as migrações pendentes no banco d
 make run-migrations
 ```
 
-2. Confirmar as Tabelas no Container
 
-Após aplicar a migração, você pode entrar no container do PostgreSQL para confirmar se as tabelas (atletas, categorias, etc.) foram criadas.
 
-Opção A: Acesso Direto (Recomendado)
 
-Use o comando docker exec para se conectar diretamente ao cliente psql dentro do container.
-
-# O nome do container é 'workout_db' (definido no docker-compose.yml)
-# -U: Usuário | -d: Banco de Dados
-```
-docker exec -it workout_db psql -U workout -d workout
-```
-
-Atenção: Você será solicitado a fornecer a senha (POSTGRES_PASSWORD do seu arquivo .env).
-
-Após logar, use o meta-comando para listar as tabelas:
-```
-\dt
-```
 
 🗃️ Como acessar o banco de dados (3 maneiras)
 
@@ -144,10 +127,14 @@ via shell do container, pgAdmin ou DBeaver.
 
 🐚 1. Pelo shell do container
 Entrar no shell do container
+```
+docker exec -it workout_db psql -U workout -d workout
+```
+ou
+```
 docker exec -it workout_db bash
-
-Conectar ao psql a partir do shell
 psql -U workout -d workout
+`` 
 
 Listar as tabelas disponíveis
 \dt
