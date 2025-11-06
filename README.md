@@ -1,12 +1,32 @@
-🚀 DIO Desafio Workout API
+## 🚀 DIO Desafio Workout API
 
-Este projeto é uma API desenvolvida em Python, utilizando o framework FastAPI, para gerenciar um sistema de cadastro de atletas e treinos, com persistência de dados no PostgreSQL e gerenciamento de esquema via Alembic.
+Este projeto é uma **API RESTful** desenvolvida em **Python** utilizando o framework **FastAPI**. Seu objetivo é gerenciar um sistema de cadastro de **atletas e treinos**. A persistência de dados é realizada no **PostgreSQL**, e o gerenciamento do esquema do banco de dados (migrações) é feito com **Alembic**.
 
-🛠️ Configuração e Instalação
+### 🌟 Funcionalidades Principais
 
-Pré-requisitos
+* Cadastro e Gerenciamento de Atletas
+* Gerenciamento de Categorias e Centros de Treinamento
+* Controle de Treinos
 
-Certifique-se de ter o Python (3.12+) e o Poetry instalados.
+---
+
+### 🛠️ Configuração e Instalação
+
+#### ⚙️ Pré-requisitos
+
+Certifique-se de ter os seguintes softwares instalados em sua máquina:
+
+* **Python (3.12+)**
+* **Poetry** (Gerenciador de dependências e ambientes virtuais)
+* **Docker** e **Docker Compose** (Recomendado para o PostgreSQL)
+* **Git**
+
+#### 📥 Clonar o Projeto
+
+```bash
+git clone dio-desafio-workout-api
+cd dio-desafio-workout-api
+```
 
 🐍 Instalar Python 3 no Ubuntu / Debian (https://wiki.python.org/moin/BeginnersGuide/Download):
 
@@ -32,8 +52,6 @@ pipx install poetry
 poetry --version
 ```
 
-# Fazer clone do projeto:
-git clone dio-desafio-workout-api
 
 1. Inicialização do Projeto
 
@@ -168,7 +186,6 @@ poetry add pydantic-settings
 
 # Estrutura
 ```
-.
 dio-desafio-workout-api/
 │
 ├── src/
@@ -220,53 +237,4 @@ dio-desafio-workout-api/
 ├── pyproject.toml
 ├── poetry.lock
 └── README.md
-
-dio-desafio-workout-api/
-│
-├── src/
-│   ├── app/
-│   │   ├── main.py
-│   │   └── factory.py
-│   │
-│   ├── api/
-│   │   ├── routers/
-│   │   │   ├── atletas.py
-│   │   │   ├── categorias.py
-│   │   │   └── centros_treinamento.py
-│   │   └── controllers/
-│   │       ├── atleta_controller.py
-│   │       ├── categoria_controller.py
-│   │       └── centro_treinamento_controller.py
-│   │
-│   ├── configs/
-│   │   └── settings.py
-│   │
-│   ├── core/
-│   │   └── database.py
-│   │
-│   ├── models/
-│   │   ├── base.py
-│   │   ├── atleta.py
-│   │   ├── categoria.py
-│   │   └── centro_treinamento.py
-│   │
-│   ├── repositories/
-│   │   ├── atleta_repository.py
-│   │   ├── categoria_repository.py
-│   │   └── centro_treinamento_repository.py
-│   │
-│   ├── schemas/
-│   │   ├── atleta.py
-│   │   ├── categoria.py
-│   │   └── centro_treinamento.py
-│   │
-│   └── services/
-│       ├── atleta_service.py
-│       ├── categoria_service.py
-│       └── centro_treinamento_service.py
-│
-├── .env
-├── pyproject.toml
-└── README.md
-
 ```
