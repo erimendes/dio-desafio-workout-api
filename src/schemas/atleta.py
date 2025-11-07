@@ -38,6 +38,7 @@ class CentroTreinamentoOut(BaseModel):
 
 
 class AtletaOut(OutMixin):
+    """Schema de saída do atleta retornado pela API"""
     pk_id: int
     nome: str
     cpf: str
